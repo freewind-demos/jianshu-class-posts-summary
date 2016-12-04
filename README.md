@@ -1,7 +1,6 @@
-Sbt Hello World Demo
-====================
+Generate Jianshu Posts Information
+==================================
 
 ```
 brew install sbt
-sbt test
 ```
