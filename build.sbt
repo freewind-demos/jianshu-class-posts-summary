@@ -15,5 +15,6 @@ resolvers ++= Seq(
 
 libraryDependencies ++= Seq(
   "org.apache.commons" % "commons-lang3" % "3.3.2",
+  "org.scala-lang.modules" %% "scala-xml" % "1.0.6",
   "net.ruippeixotog" %% "scala-scraper" % "1.1.0"
 )

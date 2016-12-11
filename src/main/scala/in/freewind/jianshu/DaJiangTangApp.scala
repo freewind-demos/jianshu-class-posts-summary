@@ -1,5 +1,10 @@
 package in.freewind.jianshu
 
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+
+import in.freewind.jianshu.reports.{RecentArticleReport, SummaryReport}
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors.{element => _, elementList => _}
 
 object DaJiangTangApp extends App {
@@ -54,13 +59,18 @@ object DaJiangTangApp extends App {
     User("薛妮", "061cb0850ee2", "申彤", Nil),
     User("梁法成", "7d8bb76cfe4f", "阎昱", Nil),
     User("谷楠楠", "f111ef01770a", "阎昱", Nil),
-    User("汪之涛", "c5ccc9f40501", "玛莉", Nil),
     User("张苗", "b14cbd37028f", "张晓飞", Nil)
   ).map(user => {
     user.copy(articles = ArticlePages.getAllArticles(user.jianshuId))
   })
 
-  Report.render(users.sortBy(u => -u.articles.size), "小buddy")
+  def parseDate(dateStr: String): Date = {
+    new SimpleDateFormat("yyyy-MM-dd").parse(dateStr)
+  }
+
+  val fromDate = "2016-12-04"
+  SummaryReport.render(users.sortBy(u => -u.articles.size), "小buddy", new File("./reports/dajiantang-summary.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), "小buddy", parseDate(fromDate), new File("./reports/dajiantang-recent-articles.html"))
 
 }
 

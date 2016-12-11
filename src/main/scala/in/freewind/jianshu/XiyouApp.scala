@@ -1,5 +1,10 @@
 package in.freewind.jianshu
 
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+
+import in.freewind.jianshu.reports.{RecentArticleReport, SummaryReport}
 import net.ruippeixotog.scalascraper.scraper.ContentExtractors.{element => _, elementList => _}
 
 object XiyouApp extends App {
@@ -33,8 +38,13 @@ object XiyouApp extends App {
     user.copy(articles = ArticlePages.getAllArticles(user.jianshuId))
   })
 
-  Report.render(users.sortBy(u => -u.articles.size), "Team Lead")
+  def parseDate(dateStr: String): Date = {
+    new SimpleDateFormat("yyyy-MM-dd").parse(dateStr)
+  }
 
+  val fromDate = "2016-12-04"
+  SummaryReport.render(users.sortBy(u => -u.articles.size), "Team Lead", new File("./reports/xiyou-summary.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), "Team Lead", parseDate(fromDate), new File("./reports/xiyou-recent-articles.html"))
 }
 
 
