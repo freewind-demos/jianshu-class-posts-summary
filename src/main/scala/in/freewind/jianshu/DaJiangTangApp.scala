@@ -68,9 +68,9 @@ object DaJiangTangApp extends App {
     new SimpleDateFormat("yyyy-MM-dd").parse(dateStr)
   }
 
-  val fromDate = "2016-12-04"
   SummaryReport.render(users.sortBy(u => -u.articles.size), "小buddy", new File("./reports/dajiantang-summary.html"))
-  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), "小buddy", parseDate(fromDate), new File("./reports/dajiantang-recent-articles.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), showEmptyUsers = true, buddyTitle = "小buddy", fromDate = parseDate(Config.afterDate), targetFile = new File("./reports/dajiantang-recent-articles0.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), showEmptyUsers = false, buddyTitle = "小buddy", fromDate = parseDate(Config.afterDate), targetFile = new File("./reports/dajiantang-recent-articles.html"))
 
 }
 

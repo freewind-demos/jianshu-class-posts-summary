@@ -42,9 +42,9 @@ object XiyouApp extends App {
     new SimpleDateFormat("yyyy-MM-dd").parse(dateStr)
   }
 
-  val fromDate = "2016-12-04"
   SummaryReport.render(users.sortBy(u => -u.articles.size), "Team Lead", new File("./reports/xiyou-summary.html"))
-  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), "Team Lead", parseDate(fromDate), new File("./reports/xiyou-recent-articles.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), showEmptyUsers = true, buddyTitle = "Team Lead", fromDate = parseDate(Config.afterDate), targetFile = new File("./reports/xiyou-recent-articles0.html"))
+  RecentArticleReport.render(users.sortBy(u => u.articles.map(_.comments).sum), showEmptyUsers = false, buddyTitle = "Team Lead", fromDate = parseDate(Config.afterDate), targetFile = new File("./reports/xiyou-recent-articles.html"))
 }
 
 
