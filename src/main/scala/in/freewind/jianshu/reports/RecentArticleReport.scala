@@ -13,6 +13,7 @@ object RecentArticleReport {
       .map(user => user.copy(articles = user.articles.filter(_.sharedDate.after(fromDate))))
       .filter(user => user.articles.nonEmpty || (user.articles.isEmpty && showEmptyUsers))
       .sortBy(_.buddyName)
+    println("Total posts: " + filteredUsers.flatMap(_.articles).size)
     val content = generateReport(filteredUsers, buddyTitle, fromDate)
     utils.applyTemplate(content, targetFile)
   }
